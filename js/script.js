@@ -93,3 +93,58 @@ if (assignmentForm) {
 
     displayAssignments();
 }
+
+// =====================================
+// CONTACT FORM VALIDATION
+// =====================================
+
+const contactForm = document.getElementById("contact-form");
+
+if (contactForm) {
+    const nameInput = document.getElementById("contact-name");
+    const emailInput = document.getElementById("contact-email");
+    const phoneInput = document.getElementById("contact-phone");
+    const subjectInput = document.getElementById("contact-subject");
+    const messageInput = document.getElementById("contact-message");
+    const feedback = document.getElementById("contact-feedback");
+
+    contactForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const name = nameInput.value.trim();
+        const email = emailInput.value.trim();
+        const phone = phoneInput.value.trim();
+        const subject = subjectInput.value.trim();
+        const message = messageInput.value.trim();
+
+        feedback.textContent = "";
+        feedback.style.color = "";
+
+        if (!name || !email || !phone || !subject || !message) {
+            feedback.textContent = "Please complete all fields.";
+            feedback.style.color = "red";
+            return;
+        }
+
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email)) {
+            feedback.textContent = "Please enter a valid email address.";
+            feedback.style.color = "red";
+            return;
+        }
+
+        const phonePattern = /^\d+$/;
+        if (!phonePattern.test(phone)) {
+            feedback.textContent = "Phone number must contain digits only.";
+            feedback.style.color = "red";
+            return;
+        }
+
+        feedback.textContent =
+            "Your information has passed validation. This demonstration form does not send messages.";
+        feedback.style.color = "green";
+
+        contactForm.reset();
+    });
+}
+
